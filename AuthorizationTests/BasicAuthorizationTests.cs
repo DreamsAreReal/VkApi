@@ -1,4 +1,5 @@
-﻿using Authorization;
+﻿using System;
+using Authorization;
 using NUnit.Framework;
 
 namespace AuthorizationTests
@@ -8,13 +9,19 @@ namespace AuthorizationTests
         [Test, TestCaseSource(typeof(UserDataMock))]
         public void LoginTests(User.User user)
         {
-
-            if (new BasicAuthorization().Login(user))
+            try
             {
+                new BasicAuthorization().Login(user);
                 Assert.Pass();
             }
+            catch (Exception e)
+            {
+                Assert.Fail($"Authorization not success. User information: {user}.\n\nException: {e.Message}");
+            }
 
-            Assert.Fail($"Authorization not success. User information: {user}");
+
+
+
         }
     }
 }

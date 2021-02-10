@@ -1,10 +1,26 @@
-﻿namespace Authorization
+﻿using System.Net.Http;
+using System.Threading.Tasks;
+
+namespace Authorization
 {
     public class BasicAuthorization : IAuthorization
     {
-        public bool Login(User.User user)
+        private string _url;
+
+        public BasicAuthorization()
         {
-            return false;
+            _url = Core.Settings.Url;
+        }
+
+        public async Task Login(User.User user)
+        {
+
+            using (HttpClient client = new HttpClient(user.Handler))
+            {
+                var query = await client.GetAsync(_url);
+
+            }
+
         }
     }
 }

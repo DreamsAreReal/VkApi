@@ -1,7 +1,9 @@
-﻿namespace Authorization
+﻿using System.Threading.Tasks;
+
+namespace Authorization
 {
     public interface IAuthorization
     {
-        bool Login(User.User user);
+        Task Login(User.User user);
     }
 }

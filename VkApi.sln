@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorizat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{1353059B-7CCD-4173-B4FD-F770CE69DD77}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AuthorizationTests", "AuthorizationTests\AuthorizationTests.csproj", "{B4759504-EBE1-4DA3-BA90-7E378F47086A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{1353059B-7CCD-4173-B4FD-F770CE69DD77}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1353059B-7CCD-4173-B4FD-F770CE69DD77}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1353059B-7CCD-4173-B4FD-F770CE69DD77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B4759504-EBE1-4DA3-BA90-7E378F47086A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4759504-EBE1-4DA3-BA90-7E378F47086A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4759504-EBE1-4DA3-BA90-7E378F47086A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4759504-EBE1-4DA3-BA90-7E378F47086A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

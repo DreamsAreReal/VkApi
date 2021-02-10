@@ -1,7 +1,5 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsole", "TestConsole\TestConsole.csproj", "{75383E19-6383-4B63-8A17-732208F7A59E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authorization", "Authorization\Authorization.csproj", "{133C0314-528B-4918-9418-67BD5B19D34F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{1353059B-7CCD-4173-B4FD-F770CE69DD77}"
@@ -16,10 +14,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{75383E19-6383-4B63-8A17-732208F7A59E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{75383E19-6383-4B63-8A17-732208F7A59E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{75383E19-6383-4B63-8A17-732208F7A59E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{75383E19-6383-4B63-8A17-732208F7A59E}.Release|Any CPU.Build.0 = Release|Any CPU
 		{133C0314-528B-4918-9418-67BD5B19D34F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{133C0314-528B-4918-9418-67BD5B19D34F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{133C0314-528B-4918-9418-67BD5B19D34F}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -11,8 +11,7 @@ namespace AuthorizationTests
         {
             try
             {
-                new BasicAuthorization().Login(user);
-                Assert.Pass();
+                new BasicAuthorization().Login(user).Wait();
             }
             catch (Exception e)
             {
@@ -20,8 +19,7 @@ namespace AuthorizationTests
             }
 
 
-
-
+            Assert.Pass();
         }
     }
 }

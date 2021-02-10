@@ -6,7 +6,30 @@ namespace User
 {
     public class User
     {
-        public HttpClientHandler Handler { get; private set; }
+        public HttpClientHandler Handler
+        {
+            get
+            {
+                HttpClientHandler handler = new HttpClientHandler
+                {
+                    UseCookies = true,
+                    CookieContainer = _cookie,
+                };
+
+                if (_proxy != null)
+                {
+                    handler.UseProxy = true;
+                    handler.Proxy = _proxy;
+                }
+
+
+                return handler;
+            }
+        }
+
+        private IWebProxy _proxy;
+        private CookieContainer _cookie;
+
 
         public string Login { get; private set; }
         public string Password { get; private set; }
@@ -18,7 +41,7 @@ namespace User
 
         public User(string login, string password, WebProxy proxy)
         {
-            Handler = new HttpClientHandler {Proxy = proxy};
+            _proxy = proxy;
             Initialization(login, password);
         }
 
@@ -29,7 +52,11 @@ namespace User
             {
                 throw new ArgumentException("Obj can't be equal to null");
             }
-            if (Login == user.Login && Password == user.Password && Handler.Equals(user.Handler))
+
+            if (Login == user.Login
+                && Password == user.Password
+                && _cookie.Equals(user._cookie)
+                && _proxy.Equals(user._proxy))
             {
                 return true;
             }
@@ -44,11 +71,7 @@ namespace User
 
         private void Initialization(string login, string password)
         {
-            if (Handler == null) Handler = new HttpClientHandler();
-
-            CookieContainer container = new CookieContainer();
-            Handler.UseCookies = true;
-            Handler.CookieContainer = container;
+            _cookie = new CookieContainer();
             Login = login;
             Password = password;
         }

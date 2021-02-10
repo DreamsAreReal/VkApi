@@ -37,6 +37,11 @@ namespace User
             return false;
         }
 
+        public override string ToString()
+        {
+            return $"Login: {Login}. Password: {Password}";
+        }
+
         private void Initialization(string login, string password)
         {
             if (Handler == null) Handler = new HttpClientHandler();

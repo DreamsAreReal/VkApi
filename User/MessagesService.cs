@@ -14,30 +14,15 @@ namespace User
         {
         }
 
-        public async Task<long> SendToUser(long id, string message)
-        {
-            return await Send(Url + $"/write{id.ToString()}", message);
-        }
 
-        public async Task<long> SendToGroup(long id, string message)
-        {
-            return await Send(Url + $"/write-{id.ToString()}", message);
-        }
-
-        public async Task<long> DeleteMessage(long id, string message)
-        {
-            return await Send(Url + $"/write-{id.ToString()}", message);
-        }
-
-
-        private async Task<long> Send(string link, string message)
+        public async Task<long> Send(long peerId, string message)
         {
             if (String.IsNullOrEmpty(message))
             {
                 throw new ArgumentException("Message can't be null or empty!");
             }
 
-            string messagesPage = await (await Client.GetAsync(link))
+            string messagesPage = await (await Client.GetAsync(Url + $"/write{peerId.ToString()}"))
                 .Content.ReadAsStringAsync();
             string urlToSend =
                 new Regex(
@@ -64,12 +49,44 @@ namespace User
             return GetLastMessageId(postQueryAnswer);
         }
 
+        public async Task DeleteMessageForAll(long peerId, long messageId)
+        {
+
+
+            string messagesPage = await (await Client.GetAsync(Url + $"/write{peerId.ToString()}"))
+                .Content.ReadAsStringAsync();
+            string urlToSend =
+                new Regex(
+                        "<form id=\"write_form\" action=\"(.*)\" method=\"post\">")
+                    .Match(messagesPage).Groups[1].Value;
+            string hash = new Regex("&hash=(.*)&_af").Match(urlToSend).Groups[1].Value;
+
+            Dictionary<string, string> queryParams = new Dictionary<string, string>
+            {
+                {"act", "delete_for_all"},
+                {"peer", peerId.ToString()},
+                {"ids", messageId.ToString()},
+                {"hash", hash},
+                {"_ajax", "1"}
+            };
+
+
+            string postQueryAnswer = await (await Client.PostAsync(Url + "/mail", new FormUrlEncodedContent(queryParams)))
+                .Content.ReadAsStringAsync();
+            return;
+
+        }
+
+
+
         private long GetLastMessageId(string page)
         {
             string lastId = new Regex("msg_item\\W+_msg(.*)\"").Match(page).Groups[1].Value;
             if (!long.TryParse(lastId, out var id))
             {
                 // Todo: normal exception
+                // Todo: create model and return this
+                // Todo: equal name, text and return
                 throw new Exception();
             }
             return id;

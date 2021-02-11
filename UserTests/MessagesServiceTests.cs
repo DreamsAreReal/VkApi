@@ -9,39 +9,27 @@ namespace UserTests
     public class MessagesServiceTests
     {
         private Core.User _user;
-        private List<long> _messagesIds;
+        private List<List<long>> _sentMessagesData;
 
         [OneTimeSetUp]
         public void MessagesServiceTestsSetup()
         {
             _user = new UserDataMock().User;
             new BasicAuthorization(_user).Login().Wait();
-            _messagesIds = new List<long>();
+            _sentMessagesData = new List<List<long>>();
 
         }
 
-        [Test, TestCase(569878520, "Hello Test")]
+        [TestCase(569878520, "Hello")]
+        [TestCase(-181495053, "Hello")]
         public void SendToUserTests(long id, string text)
         {
             MessagesService messagesService = new MessagesService(_user);
-            long idMessage = messagesService.SendToUser(id, text).Result;
+            long idMessage = messagesService.Send(id, text).Result;
             if (idMessage != 0)
             {
-                _messagesIds.Add(idMessage);
-                Assert.Pass();
-            }
-            Assert.Fail($"Message not sent. PeerId: {id}. Message: {text}.\n{_user}.");
-
-        }
-
-        [Test, TestCase(181495053, "Hello Test")]
-        public void SendToGroupTests(long id, string text)
-        {
-            MessagesService messagesService = new MessagesService(_user);
-            long idMessage = messagesService.SendToGroup(id, text).Result;
-            if (idMessage != 0)
-            {
-                _messagesIds.Add(idMessage);
+                List<long> messagesData = new List<long> {id, idMessage};
+                _sentMessagesData.Add(messagesData);
                 Assert.Pass();
             }
             Assert.Fail($"Message not sent. PeerId: {id}. Message: {text}.\n{_user}.");
@@ -54,7 +42,11 @@ namespace UserTests
         [OneTimeTearDown]
         public void MessagesServiceTearDown()
         {
-            // Todo delete sent messages
+            MessagesService messagesService = new MessagesService(_user);
+            for (int i = 0; i < _sentMessagesData.Count; i++)
+            {
+                messagesService.DeleteMessageForAll(_sentMessagesData[i][0], _sentMessagesData[i][1]).Wait();
+            }
         }
     }
 }

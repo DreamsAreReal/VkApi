@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 namespace CoreTests
 {
+    // TODO: Replace to AuthTest.
+
     /// <summary>
     /// This class need to all tests where using authorization.
     /// I added it here to not have dependencies with authorization.
@@ -11,6 +13,17 @@ namespace CoreTests
     /// </summary>
     public class UserDataMockExample
     {
+
+        /// <summary>
+        /// This property will be used to test all methods where authorization is needed.
+        /// </summary>
+        public Core.User User
+        {
+            get
+            {
+                return new Core.User("test", "pass");
+            }
+        }
 
         public IEnumerator GetEnumerator()
         {

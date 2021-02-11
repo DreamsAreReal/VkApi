@@ -4,18 +4,14 @@ using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Authorization.Exceptions;
+using Core;
 using Core.Exceptions;
 
 namespace Authorization
 {
-    public class BasicAuthorization : IAuthorization
+    public class BasicAuthorization : AbstractService, IAuthorization
     {
-        private string _url;
 
-        public BasicAuthorization()
-        {
-            _url = Core.Settings.Url;
-        }
 
         public async Task Login(Core.User user)
         {
@@ -83,7 +79,7 @@ namespace Authorization
 
             using (HttpClient client = new HttpClient(user.Handler))
             {
-                string loginPageHtml = await (await client.GetAsync(_url + "/login")).Content.ReadAsStringAsync();
+                string loginPageHtml = await (await client.GetAsync(Url + "/login")).Content.ReadAsStringAsync();
 
                 loginUrl = new Regex("<form method=\"POST\" action=\"(.*)\" novalidate>")
                     .Match(loginPageHtml).Groups[1].Value;

@@ -2,11 +2,12 @@
 {
     public abstract class AbstractService
     {
-        protected User _user;
+        protected User User;
+        protected const string Url = "https://m.vk.com/";
 
         public AbstractService(User user)
         {
-            _user = user;
+            User = user;
         }
     }
 }

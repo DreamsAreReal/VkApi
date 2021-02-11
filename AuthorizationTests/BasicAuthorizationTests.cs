@@ -13,7 +13,7 @@ namespace AuthorizationTests
         {
             try
             {
-                new BasicAuthorization().Login(user).Wait();
+                new BasicAuthorization(user).Login().Wait();
             }
             catch (Exception e)
             {

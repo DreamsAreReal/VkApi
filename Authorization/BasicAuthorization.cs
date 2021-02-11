@@ -12,27 +12,30 @@ namespace Authorization
     public class BasicAuthorization : AbstractService, IAuthorization
     {
 
-
-        public async Task Login(Core.User user)
+        public BasicAuthorization(User user) : base(user)
         {
-            string loginUrl = await GetLoginUrl(user);
+        }
+
+        public async Task Login()
+        {
+            string loginUrl = await GetLoginUrl();
             Dictionary<string, string> queryData = new Dictionary<string, string>
             {
-                {"email", user.Login},
-                {"pass", user.Password}
+                {"email", User.Login},
+                {"pass", User.Password}
             };
             string userPage = "";
-            using (HttpClient client = new HttpClient(user.Handler))
+            using (HttpClient client = new HttpClient(User.Handler))
             {
                 userPage = await (await client.PostAsync(loginUrl, new FormUrlEncodedContent(queryData))).Content
                         .ReadAsStringAsync();
 
             }
 
-            CheckAuthorization(userPage, user);
+            CheckAuthorization(userPage);
         }
 
-        private void CheckAuthorization(string page, Core.User user)
+        private void CheckAuthorization(string page)
         {
             if (String.IsNullOrEmpty(page))
             {
@@ -43,27 +46,27 @@ namespace Authorization
                 .Match(page).Groups[1].Value;
             if (!String.IsNullOrEmpty(banString))
             {
-                var exception = new BanAccountException(banString) {Login = user.Login, Password = user.Password};
+                var exception = new BanAccountException(banString) {Login = User.Login, Password = User.Password};
                 throw exception;
             }
 
             if (new Regex("service_msg_warning").IsMatch(page))
             {
-                var exception = new InvalidDataException {Login = user.Login, Password = user.Password};
+                var exception = new InvalidDataException {Login = User.Login, Password = User.Password};
                 throw exception;
             }
 
             if (new Regex("login_blocked_panel").IsMatch(page))
             {
                 var exception = new CodeNeededException("We need code on login page.")
-                    {Login = user.Login, Password = user.Password};
+                    {Login = User.Login, Password = User.Password};
                 throw exception;
             }
 
             if (new Regex("captcha_key").IsMatch(page))
             {
                 var exception = new CaptchaException("We need to resolve captcha on login page.")
-                    {Login = user.Login, Password = user.Password};
+                    {Login = User.Login, Password = User.Password};
                 throw exception;
             }
 
@@ -73,11 +76,11 @@ namespace Authorization
             }
         }
 
-        private async Task<string> GetLoginUrl(Core.User user)
+        private async Task<string> GetLoginUrl()
         {
             string loginUrl = "";
 
-            using (HttpClient client = new HttpClient(user.Handler))
+            using (HttpClient client = new HttpClient(User.Handler))
             {
                 string loginPageHtml = await (await client.GetAsync(Url + "/login")).Content.ReadAsStringAsync();
 
@@ -92,5 +95,7 @@ namespace Authorization
 
             return loginUrl;
         }
+
+
     }
 }

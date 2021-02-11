@@ -17,7 +17,7 @@ namespace User
                 throw new ArgumentException("Message can't be null or empty!");
             }
 
-            using (HttpClient client = new HttpClient(_user.Handler))
+            using (HttpClient client = new HttpClient(User.Handler))
             {
 
             }

@@ -9,3 +9,6 @@ riderModule.iml
 /AuthorizationTests/UserDataMock.cs
 /VkApi.sln.DotSettings.user
 /CoreTests/UserDataMock.cs
+/.vs/VkApi/DesignTimeBuild/
+/.vs/VkApi/v16/TestStore/0/
+/.vs/VkApi/v16/.suo

@@ -24,13 +24,11 @@ namespace Authorization
                 {"email", User.Login},
                 {"pass", User.Password}
             };
-            string userPage = "";
-            using (HttpClient client = new HttpClient(User.Handler))
-            {
-                userPage = await (await client.PostAsync(loginUrl, new FormUrlEncodedContent(queryData))).Content
-                        .ReadAsStringAsync();
 
-            }
+            string userPage = await (await Client.PostAsync(loginUrl, new FormUrlEncodedContent(queryData))).Content
+                .ReadAsStringAsync();
+
+
 
             CheckAuthorization(userPage);
         }
@@ -78,15 +76,13 @@ namespace Authorization
 
         private async Task<string> GetLoginUrl()
         {
-            string loginUrl = "";
 
-            using (HttpClient client = new HttpClient(User.Handler))
-            {
-                string loginPageHtml = await (await client.GetAsync(Url + "/login")).Content.ReadAsStringAsync();
 
-                loginUrl = new Regex("<form method=\"POST\" action=\"(.*)\" novalidate>")
+            string loginPageHtml = await (await Client.GetAsync(Url + "/login")).Content.ReadAsStringAsync();
+
+            string loginUrl = new Regex("<form method=\"POST\" action=\"(.*)\" novalidate>")
                     .Match(loginPageHtml).Groups[1].Value;
-            }
+
 
             if (String.IsNullOrEmpty(loginUrl))
             {

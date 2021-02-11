@@ -8,7 +8,7 @@ namespace AuthorizationTests
     ///
     /// Create the same test mock like this class in this project. With the name UserDataMock.
     /// </summary>
-    public class UserDataMockExample
+    public class UserDataMockExample : IEnumerable
     {
 
         /// <summary>

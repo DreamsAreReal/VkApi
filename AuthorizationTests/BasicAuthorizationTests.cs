@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using Authorization;
 using NUnit.Framework;
 
@@ -8,7 +7,7 @@ namespace AuthorizationTests
 {
     public class BasicAuthorizationTests
     {
-        [Test, TestCaseSource(typeof(UserDataMock))]
+        [Test, TestCaseSource(typeof(AuthorizationTests.UserDataMock))]
         public void LoginTests(Core.User user)
         {
             try

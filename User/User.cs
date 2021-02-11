@@ -27,7 +27,7 @@ namespace User
             }
         }
 
-        private IWebProxy _proxy;
+        private readonly IWebProxy _proxy;
         private CookieContainer _cookie;
 
 

@@ -1,7 +1,12 @@
 ﻿namespace Core
 {
-    public class AbstractService
+    public abstract class AbstractService
     {
-        private User _user;
+        protected User _user;
+
+        public AbstractService(User user)
+        {
+            _user = user;
+        }
     }
 }

@@ -1,6 +1,8 @@
 ﻿using System;
+using System.IO;
 using Authorization;
 using NUnit.Framework;
+
 
 namespace AuthorizationTests
 {
@@ -21,5 +23,6 @@ namespace AuthorizationTests
 
             Assert.Pass();
         }
+
     }
 }

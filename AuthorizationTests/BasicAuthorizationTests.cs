@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using Authorization;
-using CoreTests;
 using NUnit.Framework;
 
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Authorization;
-using CoreTests;
+using AuthorizationTests;
 using NUnit.Framework;
 using User;
 

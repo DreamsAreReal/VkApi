@@ -13,6 +13,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AuthorizationTests\AuthorizationTests.csproj" />
       <ProjectReference Include="..\Authorization\Authorization.csproj" />
       <ProjectReference Include="..\CoreTests\CoreTests.csproj" />
       <ProjectReference Include="..\User\User.csproj" />

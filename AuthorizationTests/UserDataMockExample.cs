@@ -1,13 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 
-namespace CoreTests
+namespace AuthorizationTests
 {
-    // TODO: Replace to AuthTest.
-
     /// <summary>
     /// This class need to all tests where using authorization.
-    /// I added it here to not have dependencies with authorization.
     ///
     /// Create the same test mock like this class in this project. With the name UserDataMock.
     /// </summary>
@@ -25,6 +22,11 @@ namespace CoreTests
             }
         }
 
+
+        /// <summary>
+        /// This need only login tests
+        /// </summary>
+        /// <returns></returns>
         public IEnumerator GetEnumerator()
         {
             yield return new Core.User("login", "password");

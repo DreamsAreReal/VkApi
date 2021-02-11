@@ -9,7 +9,7 @@ namespace AuthorizationTests
     public class BasicAuthorizationTests
     {
         [Test, TestCaseSource(typeof(UserDataMock))]
-        public void LoginTests(User.User user)
+        public void LoginTests(Core.User user)
         {
             try
             {

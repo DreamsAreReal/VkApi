@@ -4,6 +4,6 @@ namespace Authorization
 {
     public interface IAuthorization
     {
-        Task Login(User.User user);
+        Task Login(Core.User user);
     }
 }

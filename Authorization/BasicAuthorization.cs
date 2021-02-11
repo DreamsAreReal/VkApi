@@ -17,7 +17,7 @@ namespace Authorization
             _url = Core.Settings.Url;
         }
 
-        public async Task Login(User.User user)
+        public async Task Login(Core.User user)
         {
             string loginUrl = await GetLoginUrl(user);
             Dictionary<string, string> queryData = new Dictionary<string, string>
@@ -36,7 +36,7 @@ namespace Authorization
             CheckAuthorization(userPage, user);
         }
 
-        private void CheckAuthorization(string page, User.User user)
+        private void CheckAuthorization(string page, Core.User user)
         {
             if (String.IsNullOrEmpty(page))
             {
@@ -77,7 +77,7 @@ namespace Authorization
             }
         }
 
-        private async Task<string> GetLoginUrl(User.User user)
+        private async Task<string> GetLoginUrl(Core.User user)
         {
             string loginUrl = "";
 

@@ -15,11 +15,13 @@ namespace UserTests
         public void MessagesServiceTestsSetup()
         {
             _user = new UserDataMock().User;
-            new BasicAuthorization(_user).Login();
+            new BasicAuthorization(_user).Login().Wait();
+            _messagesIds = new List<long>();
+
         }
 
-        [Test, TestCase(1, "1")]
-        public void SendTests(long id, string text)
+        [Test, TestCase(569878520, "Hello Test")]
+        public void SendToUserTests(long id, string text)
         {
             MessagesService messagesService = new MessagesService(_user);
             long idMessage = messagesService.SendToUser(id, text).Result;
@@ -31,6 +33,23 @@ namespace UserTests
             Assert.Fail($"Message not sent. PeerId: {id}. Message: {text}.\n{_user}.");
 
         }
+
+        [Test, TestCase(181495053, "Hello Test")]
+        public void SendToGroupTests(long id, string text)
+        {
+            MessagesService messagesService = new MessagesService(_user);
+            long idMessage = messagesService.SendToGroup(id, text).Result;
+            if (idMessage != 0)
+            {
+                _messagesIds.Add(idMessage);
+                Assert.Pass();
+            }
+            Assert.Fail($"Message not sent. PeerId: {id}. Message: {text}.\n{_user}.");
+
+        }
+
+
+
 
         [OneTimeTearDown]
         public void MessagesServiceTearDown()

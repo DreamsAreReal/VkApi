@@ -20,9 +20,8 @@ namespace UserTests
 
         }
 
-        [TestCase(569878520, "Hello")]
-        [TestCase(-181495053, "Hello")]
-        public void SendToUserTests(long id, string text)
+        [TestCase(-1, "Test!")]
+        public void SendTests(long id, string text)
         {
             MessagesService messagesService = new MessagesService(_user);
             long idMessage = messagesService.Send(id, text).Result;

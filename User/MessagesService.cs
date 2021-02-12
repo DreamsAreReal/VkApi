@@ -82,12 +82,16 @@ namespace User
         private long GetLastMessageId(string page)
         {
             string lastId = new Regex("msg_item\\W+_msg(.*)\"").Match(page).Groups[1].Value;
-            if (!long.TryParse(lastId, out var id))
+            long id;
+            if (!long.TryParse(lastId, out id))
             {
-                // Todo: normal exception
-                // Todo: create model and return this
-                // Todo: equal name, text and return
-                throw new Exception();
+                if (!long.TryParse(new Regex("(.*) mi_unread").Match(lastId).Groups[1].Value, out id))
+                {
+                    // Todo: normal exception
+                    // Todo: create model and return this
+                    // Todo: equal name, text and return
+                    throw new Exception();
+                }
             }
             return id;
         }

@@ -14,7 +14,11 @@ namespace User
         {
         }
 
-
+        //TODO: Parsing with html with fizzler
+        // Todo: need to check auth, or captcha
+        // Todo: normal exception
+        // Todo: create model and return this
+        // Todo: equal name, text and return
         public async Task<long> Send(long peerId, string message)
         {
             if (String.IsNullOrEmpty(message))
@@ -39,7 +43,6 @@ namespace User
 
             if (String.IsNullOrEmpty(urlToSend))
             {
-                // Todo: need to check auth, or captcha
                 throw new UnknownException();
             }
 
@@ -51,8 +54,6 @@ namespace User
 
         public async Task DeleteMessageForAll(long peerId, long messageId)
         {
-
-
             string messagesPage = await (await Client.GetAsync(Url + $"/write{peerId.ToString()}"))
                 .Content.ReadAsStringAsync();
             string urlToSend =
@@ -87,9 +88,6 @@ namespace User
             {
                 if (!long.TryParse(new Regex("(.*) mi_unread").Match(lastId).Groups[1].Value, out id))
                 {
-                    // Todo: normal exception
-                    // Todo: create model and return this
-                    // Todo: equal name, text and return
                     throw new Exception();
                 }
             }

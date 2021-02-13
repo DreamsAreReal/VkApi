@@ -11,7 +11,7 @@ namespace Authorization
 {
     public class BasicAuthorization : AbstractService, IAuthorization
     {
-
+        // TODO: Parsing with html with fizzler
         public BasicAuthorization(User user) : base(user)
         {
         }

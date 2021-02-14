@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using AngleSharp.Dom;
 using AngleSharp.Html.Parser;
@@ -63,7 +65,47 @@ namespace Wall
 
         }
 
+        public async Task AddComment(string postId, long fromId, string message)
+        {
+            string postPage = await (await Client.GetAsync(Url + "/wall" + postId)).Content.ReadAsStringAsync();
 
+            string hash = String.Empty;
+            string newComment = String.Empty;
+            string url = String.Empty;
+
+            using (var document = new HtmlParser().ParseDocument(postPage))
+            {
+                var form = document.QuerySelector(".RepliesField_wrap form[action]");
+                if (form != null
+                    && form?.GetAttribute("action") != null)
+                {
+                    url = form?.GetAttribute("action");
+                    hash = new Regex("hash=(.*)").Match(url).Groups[1].Value;
+                    newComment = new Regex("new_comment=(.*)&").Match(url).Groups[1].Value;
+                }
+                else
+                {
+                    throw new ParseException("Can't parse url to add comment");
+                }
+            }
+
+            var data = new Dictionary<string, string>
+            {
+                {"act", "post"},
+                {"new_comment", newComment},
+                {"hash", hash},
+                {"from_oid", fromId.ToString()},
+                {"reply_to", "0"},
+                {"reply_to_name", ""},
+                {"message", message},
+                {"_ref", "wall" + postId}
+            };
+
+
+            await Client.
+                PostAsync(Url + url, new FormUrlEncodedContent(data));
+
+        }
 
 
         

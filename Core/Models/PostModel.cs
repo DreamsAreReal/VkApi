@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Core.Models
 {
@@ -13,6 +14,7 @@ namespace Core.Models
         public List<string> Attachments { get; set; }
 
         public StatModel Stat { get; set; }
+        public DateTime Date { get; set; }
 
     }
 }

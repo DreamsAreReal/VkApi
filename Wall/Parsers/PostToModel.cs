@@ -23,6 +23,7 @@ namespace Wall.Parsers
             int reposts = 0;
             int comments = 0;
             string views = String.Empty;
+            DateTime date = new DateTime();
 
 
             if (author==null)
@@ -65,12 +66,12 @@ namespace Wall.Parsers
 
             if (post?.QuerySelector("b.v_share") != null)
             {
-                int.TryParse(post?.QuerySelector("b.v_like").InnerHtml, out likes);
+                int.TryParse(post?.QuerySelector("b.v_share").InnerHtml, out reposts);
             }
 
             if (post?.QuerySelector("b.v_replies") != null)
             {
-                int.TryParse(post?.QuerySelector("b.v_like").InnerHtml, out likes);
+                int.TryParse(post?.QuerySelector("b.v_replies").InnerHtml, out comments);
             }
 
 
@@ -79,6 +80,26 @@ namespace Wall.Parsers
                 views = post.QuerySelector("b.v_views").InnerHtml;
             }
 
+            if (post?.QuerySelector("a.wi_date")!=null)
+            {
+                var str = post?.QuerySelector("a.wi_date").InnerHtml;
+                if (str.Contains("сегодня"))
+                {
+                    date = DateTime.Parse(str.Substring(10));
+                }
+                if (str.Contains("вчера"))
+                {
+                    date = DateTime.Parse(str.Substring(8));
+                    date.AddDays(-1);
+                }
+
+
+            }
+            else if (post?.QuerySelector("a.wi_date")!=null
+            && post?.QuerySelector("a.wi_date").GetAttribute("data-date")!=null)
+            {
+                // Parse time: 12 фев 2021 в 23:30
+            }
 
             var postModel = new PostModel
             {
@@ -96,6 +117,7 @@ namespace Wall.Parsers
                     Comments = comments,
                     Views = views
                 },
+                Date = date,
                 Attachments = new List<string>()
             };
             foreach (var attachment in post.QuerySelectorAll("div.thumbs_map a"))

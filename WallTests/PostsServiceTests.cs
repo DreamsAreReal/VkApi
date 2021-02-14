@@ -11,7 +11,7 @@ namespace WallTests
 {
     public class PostsServiceTests
     {
-        [TestCase(116181796)]
+        [TestCase(-116181796)]
         public void Test(long id)
         {
             var user = new UserDataMock().User;
@@ -19,7 +19,7 @@ namespace WallTests
             List<PostModel> postModels = new List<PostModel>();
             using (var wall = new Wall.PostsService(user))
             {
-                var e = wall.GetPosts(id).GetAsyncEnumerator();
+                var e = wall.GetPostsFromGroup(id, 15).GetAsyncEnumerator();
 
                 try
                 {
